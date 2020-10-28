@@ -21,7 +21,7 @@ if [ -z "$KEY_DEPLOY_PATH" ]; then
     exit 1
 fi
 
-SSH_ARGS="-q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+SSH_ARGS="-t -q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 FORCE=
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
