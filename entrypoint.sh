@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -x
 
 if [ -z "$CERT" ]; then
@@ -21,7 +21,7 @@ if [ -z "$KEY_DEPLOY_PATH" ]; then
     exit 1
 fi
 
-SSH_ARGS="-t -q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+SSH_ARGS="-q -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 FORCE=
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
@@ -54,7 +54,7 @@ scp -vvv $SSH_ARGS $CERT_DIR/fullchain.pem $REMOTE_CONN:$CERT_DEPLOY_PATH
 scp -vvv $SSH_ARGS $CERT_DIR/privkey.pem $REMOTE_CONN:$KEY_DEPLOY_PATH
 [[ $? -eq 0 ]] || exit $?
 if [ -n "$EXEC_DEPLOY_CMD" ]; then
-    ssh $SSH_ARGS $REMOTE_CONN "$EXEC_DEPLOY_CMD"
+    ssh -vvv -t -t $SSH_ARGS $REMOTE_CONN "$EXEC_DEPLOY_CMD"
     [[ $? -eq 0 ]] || exit $?
 fi
 
